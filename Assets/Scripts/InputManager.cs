@@ -72,6 +72,7 @@ public class InputManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject() == false)
         {
+          
             var position = RaycastGround();
             if (position != null)
             {

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlacementManager : MonoBehaviour
 {
@@ -53,11 +54,28 @@ public class PlacementManager : MonoBehaviour
     }
 
 
-    private void ModifyStructureModel(Vector3Int position, GameObject newModel, Quaternion rotation)
+    public void ModifyStructureModel(Vector3Int position, GameObject newModel, Quaternion rotation)
     {
         if (tempRoadObjects.ContainsKey(position))
         {
             tempRoadObjects[position].SwapModel(newModel, rotation);
         }
+    }
+
+    internal CellType[] GetNeighboursTypesFor(Vector3Int position)
+    {
+        return placementGrid.GetAllAdjacentCellTypes(position.x,position.z);  
+        
+    }
+
+    internal List<Vector3Int> GetNeighboursTypesFor(Vector3Int tempPosition, CellType type)
+    {
+        var neighboursVertices = placementGrid.GetAdjacentCellsOfType(tempPosition.x, tempPosition.z, type);
+        List<Vector3Int> neighbours = new List<Vector3Int>();
+        foreach(var vertex in neighboursVertices)
+        {
+            neighbours.Add(new Vector3Int(vertex.X, 0, vertex.Y));
+        }
+        return neighbours;
     }
 }
