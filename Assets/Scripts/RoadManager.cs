@@ -11,7 +11,8 @@ public class RoadManager : MonoBehaviour
     public List<Vector3Int> temporaryPlacementPos = new List<Vector3Int>();
     public List<Vector3Int> AdjasentPositionsToAdapt = new List<Vector3Int>();
 
-    public GameObject roadStraight;
+    [SerializeField]
+    private GameObject roadStraight;
     
     private RoadAdapter roadAdapter;
 
