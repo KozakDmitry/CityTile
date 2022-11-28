@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public CameraMovement cameraMovement;
+    [SerializeField]
+    private CameraMovement cameraMovement;
 
     [SerializeField]
     private InputManager inputManager;
