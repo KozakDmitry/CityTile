@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class RoadAdapter : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject deadEnd, roadStr, corner, fourWay, threeWay;
+    
+    public GameObject deadEnd, roadStr, corner, fourWay, threeWay;
     
 
 
@@ -67,22 +67,23 @@ public class RoadAdapter : MonoBehaviour
 
     private void CreateThreeWayRoad(PlacementManager placementManager, CellType[] result, Vector3Int tempPosition)
     {
-        if (result[0] != CellType.Road)
+        if (result[1] == CellType.Road && result[2] == CellType.Road && result[3] == CellType.Road)
         {
             placementManager.ModifyStructureModel(tempPosition, threeWay, Quaternion.identity);
         }
-        else if (result[1]!= CellType.Road)
+        else if (result[2] == CellType.Road && result[3] == CellType.Road && result[0] == CellType.Road)
         {
             placementManager.ModifyStructureModel(tempPosition, threeWay, Quaternion.Euler(0, 90, 0));
         }
-        else if (result[2] != CellType.Road)
+        else if (result[3] == CellType.Road && result[0] == CellType.Road && result[1] == CellType.Road)
         {
             placementManager.ModifyStructureModel(tempPosition, threeWay, Quaternion.Euler(0, 180, 0));
         }
-        else if (result[3] != CellType.Road)
+        else if (result[0] == CellType.Road && result[1] == CellType.Road && result[2] == CellType.Road)
         {
             placementManager.ModifyStructureModel(tempPosition, threeWay, Quaternion.Euler(0, 270, 0));
         }
+
     }
 
     private bool CreateStraightRoad(PlacementManager placementManager, CellType[] result, Vector3Int tempPosition)

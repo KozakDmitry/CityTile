@@ -1,3 +1,4 @@
+using SVS;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,8 +12,8 @@ public class RoadManager : MonoBehaviour
     public List<Vector3Int> temporaryPlacementPos = new List<Vector3Int>();
     public List<Vector3Int> AdjasentPositionsToAdapt = new List<Vector3Int>();
 
-    [SerializeField]
-    private GameObject roadStraight;
+    private Vector3Int startPosition;
+    private bool placemode = false;
     
     private RoadAdapter roadAdapter;
 
@@ -30,13 +31,40 @@ public class RoadManager : MonoBehaviour
         {
             return;
         }
-        temporaryPlacementPos.Clear();
-        temporaryPlacementPos.Add(position);
-    
-        placementManager.PlaceTemporary(position, roadStraight, CellType.Road);
+        if(placemode == false)
+        {
+            AdjasentPositionsToAdapt.Clear();
+            temporaryPlacementPos.Clear();
+            placemode = true;
+            startPosition = position;
+            
+            temporaryPlacementPos.Add(position);
+            placementManager.PlaceTemporary(position, roadAdapter.deadEnd, CellType.Road);
+          
+        }
+        else
+        {
+            placementManager.RemoveAllTempStructures();
+            temporaryPlacementPos.Clear();
+            AdjasentPositionsToAdapt.Clear();
+
+            temporaryPlacementPos = placementManager.GetPathBetween(startPosition, position);
+            foreach(var pos in temporaryPlacementPos)
+            {
+                if (placementManager.CheckIfPositionIsFree(pos) == false)
+                {
+                    continue;
+                }
+                placementManager.PlaceTemporary(pos, roadAdapter.deadEnd, CellType.Road);
+                
+            }
+        }
         AdaptRoadPrefabs();
     }
 
+
+   
+     
     private void AdaptRoadPrefabs()
     {
         foreach(var tempPosition in temporaryPlacementPos)
@@ -45,7 +73,11 @@ public class RoadManager : MonoBehaviour
             var neighbors = placementManager.GetNeighboursTypesFor(tempPosition, CellType.Road);
             foreach(var roadPosition in neighbors)
             {
-                AdjasentPositionsToAdapt.Add(roadPosition);
+                if (AdjasentPositionsToAdapt.Contains(roadPosition) == false)
+                {
+                    AdjasentPositionsToAdapt.Add(roadPosition);
+                }
+              
             }
         }
         foreach(var positionToAdapt in AdjasentPositionsToAdapt)
@@ -53,5 +85,17 @@ public class RoadManager : MonoBehaviour
             roadAdapter.FixRoadAtPosition(placementManager, positionToAdapt);
         }
 
+    }
+
+    public void FinishPlaceMode()
+    {
+        placemode = false;
+        placementManager.AddTempStructuresToStructDict();
+        if (temporaryPlacementPos.Count > 0)
+        {
+            AudioPlayer.instance.PlayPlacementSound();
+        }
+        temporaryPlacementPos.Clear();
+        startPosition = Vector3Int.zero;
     }
 }

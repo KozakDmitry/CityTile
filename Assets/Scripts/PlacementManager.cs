@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -12,6 +13,8 @@ public class PlacementManager : MonoBehaviour
     Grid placementGrid;
 
     private Dictionary<Vector3Int, StructureModel> tempRoadObjects = new Dictionary<Vector3Int, StructureModel>();
+    private Dictionary<Vector3Int, StructureModel> structuresDict = new Dictionary<Vector3Int, StructureModel>();
+
 
     private void Start()
     {
@@ -60,6 +63,10 @@ public class PlacementManager : MonoBehaviour
         {
             tempRoadObjects[position].SwapModel(newModel, rotation);
         }
+        else if (structuresDict.ContainsKey(position))
+        {
+            structuresDict[position].SwapModel(newModel, rotation);
+        }
     }
 
     internal CellType[] GetNeighboursTypesFor(Vector3Int position)
@@ -77,5 +84,38 @@ public class PlacementManager : MonoBehaviour
             neighbours.Add(new Vector3Int(vertex.X, 0, vertex.Y));
         }
         return neighbours;
+    }
+
+    internal void RemoveAllTempStructures()
+    {
+        Debug.Log(structuresDict.Count);
+        foreach(var structure in tempRoadObjects.Values)
+        {
+            var position = Vector3Int.RoundToInt(structure.transform.position);
+            placementGrid[position.x, position.z] = CellType.Empty;
+            Debug.Log(position);
+            Destroy(structure.gameObject);
+        }
+        tempRoadObjects.Clear();
+    }
+
+    internal List<Vector3Int> GetPathBetween(Vector3Int startPosition, Vector3Int position)
+    {
+        var result = GridSearch.AStarSearch(placementGrid, new Point(startPosition.x, startPosition.z), new Point(position.x, position.z));
+        List<Vector3Int> path = new List<Vector3Int>();
+        foreach (Point point in result)
+        {
+            path.Add(new Vector3Int(point.X, 0, point.Y));
+        }
+        return path;
+    }
+
+    internal void AddTempStructuresToStructDict()
+    {
+        foreach(var structure in tempRoadObjects)
+        {
+            structuresDict.Add(structure.Key, structure.Value);
+        }
+        tempRoadObjects.Clear();
     }
 }
