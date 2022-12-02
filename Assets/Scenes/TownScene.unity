@@ -4263,7 +4263,7 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
-  roadStraight: {fileID: 5661862354351878554, guid: 0cf01c743836d154eb47042e1bc62afd, type: 3}
+  AdjasentPositionsToAdapt: []
 --- !u!114 &465835410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6347,6 +6347,7 @@ GameObject:
   - component: {fileID: 681313532}
   - component: {fileID: 681313531}
   - component: {fileID: 681313530}
+  - component: {fileID: 681313534}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -6436,6 +6437,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &681313534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 681313528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29cca71318e270848a0f4724f62543a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roadButton: {fileID: 504028732}
+  houseButton: {fileID: 1325324658}
+  specialButton: {fileID: 1405492519}
+  outlineColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1001 &695513889
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15379,6 +15396,7 @@ MonoBehaviour:
   cameraMovement: {fileID: 2044889014}
   inputManager: {fileID: 27357257}
   roadManager: {fileID: 465835409}
+  uiManager: {fileID: 681313534}
 --- !u!1001 &1496938630
 PrefabInstance:
   m_ObjectHideFlags: 0

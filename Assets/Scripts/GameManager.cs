@@ -13,17 +13,43 @@ public class GameManager : MonoBehaviour
     private InputManager inputManager;
     [SerializeField]
     private RoadManager roadManager;
-
+    [SerializeField]
+    private UIManager uiManager;
+        
 
 
     private void Start()
     {
+        uiManager.OnRoadPlacement += RoadPlacementHandler;
+        uiManager.OnRoadPlacement += HousePlacementHandler;
+        uiManager.OnRoadPlacement += SpecialPlacementHandler;
+
+    }
+
+    private void SpecialPlacementHandler()
+    {
+        ClearInputActions();
+    }
+
+    private void HousePlacementHandler()
+    {
+        ClearInputActions();
+    }
+
+    private void RoadPlacementHandler()
+    {
+        ClearInputActions();
         inputManager.onMouseClick += roadManager.PlaceRoad;
         inputManager.onMouseHold += roadManager.PlaceRoad;
         inputManager.onMouseUp += roadManager.FinishPlaceMode;
     }
 
- 
+    private void ClearInputActions()
+    {
+        inputManager.onMouseClick += null;
+        inputManager.onMouseHold += null;
+        inputManager.onMouseUp += null;
+    }
 
     private void Update()
     {
