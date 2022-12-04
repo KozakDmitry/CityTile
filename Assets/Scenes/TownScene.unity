@@ -735,6 +735,67 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8690446373913364511, guid: bb8a349e47100e3438e3350c256e20e3, type: 3}
   m_PrefabInstance: {fileID: 68506886}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &74887760
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 74887762}
+  - component: {fileID: 74887761}
+  m_Layer: 0
+  m_Name: StructureManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &74887761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 74887760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5453b1bd280c973439903300818836f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  housePrefabs:
+  - prefab: {fileID: 7864668269691680764, guid: 44c75b500bfebf84993deb17f38a98f6, type: 3}
+    weight: 0.25
+  - prefab: {fileID: 8172496117335426106, guid: 3527735cc30c8554aadd1222f91bf61f, type: 3}
+    weight: 0.25
+  - prefab: {fileID: 2769822920355022703, guid: 7102e40a9ba863a44838c4fd828cc22b, type: 3}
+    weight: 1
+  - prefab: {fileID: 801535651834448878, guid: 3240703552f47d04d9bf7207ca5bfa85, type: 3}
+    weight: 1
+  - prefab: {fileID: 8067785501733222628, guid: 4617fd335db984f4bb34f5eb561fd82b, type: 3}
+    weight: 1
+  specialPrefabs:
+  - prefab: {fileID: 8028572972740798329, guid: b4e018779a1b9aa44b2a988c6d8ddfda, type: 3}
+    weight: 0.25
+  - prefab: {fileID: 3702253504043930072, guid: 838f9b485bb510747a4b89e3cb91e1bd, type: 3}
+    weight: 1
+  placementManager: {fileID: 1380824718}
+--- !u!4 &74887762
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 74887760}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 11.388361, y: 3.0948937, z: 10.296833}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &75374023
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15397,6 +15458,7 @@ MonoBehaviour:
   inputManager: {fileID: 27357257}
   roadManager: {fileID: 465835409}
   uiManager: {fileID: 681313534}
+  structureManager: {fileID: 74887761}
 --- !u!1001 &1496938630
 PrefabInstance:
   m_ObjectHideFlags: 0

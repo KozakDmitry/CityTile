@@ -39,12 +39,7 @@ public class PlacementManager : MonoBehaviour
         return false;
     }
 
-    internal void PlaceTemporary(Vector3Int position, GameObject structurePrefab, CellType type)
-    {
-        placementGrid[position.x, position.z] = type;
-        StructureModel structure = CreateNewStructureModel(position, structurePrefab,type);
-        tempRoadObjects.Add(position, structure);
-    }
+    
 
     private StructureModel CreateNewStructureModel(Vector3Int position, GameObject structurePrefab, CellType type)
     {
@@ -115,7 +110,35 @@ public class PlacementManager : MonoBehaviour
         foreach(var structure in tempRoadObjects)
         {
             structuresDict.Add(structure.Key, structure.Value);
+            DestroyNatureAt(structure.Key);
         }
         tempRoadObjects.Clear();
     }
+
+    internal void PlaceTemporary(Vector3Int position, GameObject structurePrefab, CellType type)
+    {
+        placementGrid[position.x, position.z] = type;
+        StructureModel structure = CreateNewStructureModel(position, structurePrefab, type);
+        tempRoadObjects.Add(position, structure);
+        DestroyNatureAt(position);
+    }
+
+    internal void PlaceObjectOnTheMap(Vector3Int position, GameObject structurePrefab, CellType type)
+    {
+        placementGrid[position.x, position.z] = type;
+        StructureModel structure = CreateNewStructureModel(position, structurePrefab, type);
+        structuresDict.Add(position, structure);
+        DestroyNatureAt(position);
+    }
+
+    private void DestroyNatureAt(Vector3Int position)
+    {
+        RaycastHit[] hits = Physics.BoxCastAll(position+new Vector3(0,0.5f,0),new Vector3(0.5f,0.5f,0.5f),transform.up,Quaternion.identity,1f,1<<LayerMask.NameToLayer("Nature"));
+        foreach (var item in hits)
+        {
+            Destroy(item.collider.gameObject);
+        }
+    }
+
+   
 }

@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     private RoadManager roadManager;
     [SerializeField]
     private UIManager uiManager;
+    [SerializeField]
+    private StructureManager structureManager;
         
 
 
@@ -29,11 +31,13 @@ public class GameManager : MonoBehaviour
     private void SpecialPlacementHandler()
     {
         ClearInputActions();
+        inputManager.onMouseClick += structureManager.PlaceSpecial;
     }
 
     private void HousePlacementHandler()
     {
         ClearInputActions();
+        inputManager.onMouseClick += structureManager.PlaceHouse;
     }
 
     private void RoadPlacementHandler()
